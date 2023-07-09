@@ -1,6 +1,6 @@
 This is a work-in-progress infix calculator designed to read inputted expressions, and calculate the result of them.
 
-This calculator will be designed to handle all positive and negative digits, as well as the operators +, -, /, * (multiplication), ^ (power), and % (modulo). Once 
+This calculator will be designed to handle all positive and negative digits, as well as the operators +, -, /, *, ^, and %. Once 
 calculated, this calculator will be able to output the correct value of any expression given that they do not exceed the 32-bit integer limit (for now).
 
 It will also have a memory system, with the capitalized character "A" denoting the result of the previous input.

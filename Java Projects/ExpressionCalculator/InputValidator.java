@@ -4,9 +4,9 @@
  */
 
 
-package calculator;
+package expressionCalculator;
 
-public class InputValidator {			
+public class InputValidator {
 	String errorMessage = "Erroneous error: If you see this message, there is an error within this code";
 	int parenthesisCount = 0;
 	
@@ -47,7 +47,17 @@ public class InputValidator {
 				return false;
 			}
 			else if(c == '-' && !precedingOperator) {
+				precedingNumber = false;
 				precedingOperator = true;
+			}
+			
+			if(c == 'A' && precedingNumber) {
+				errorMessage = "Format error: Previous answers 'A' must be preceded by an operator";
+				return false;
+			}
+			else if(c == 'A' && !precedingNumber) {
+				precedingNumber = true;
+				precedingOperator = false;
 			}
 			
 			if(c == ')' && !openParenthesis) {
@@ -55,11 +65,13 @@ public class InputValidator {
 				return false;
 			}
 			else if(c == ')' && openParenthesis){
+				precedingNumber = false;
 				openParenthesis = parenthesisCounter();
 			}
 			
 			if(c == '(') {
 				openParenthesis = true;
+				precedingNumber = false;
 				precedingOperator = false;
 				parenthesisCount++;
 			}

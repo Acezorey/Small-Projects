@@ -4,7 +4,7 @@
  */
 
 
-package calculator;
+package expressionCalculator;
 
 import java.util.Scanner;
 

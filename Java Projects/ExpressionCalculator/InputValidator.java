@@ -13,6 +13,8 @@ public class InputValidator {
 	public boolean validate(String input) {
 		boolean precedingNumber = false;
 		boolean precedingOperator = false;
+		boolean precedingAns = false;
+		boolean precedingDecimal = false;
 		boolean openParenthesis = false;
 		boolean containsNumbers = false;
 		
@@ -38,8 +40,10 @@ public class InputValidator {
 				return false;
 			}
 			else if(precedingNumber && (c=='+' || c=='/' || c=='*' || c=='^' || c=='%')){
+				precedingAns = false;
 				precedingNumber = false;
 				precedingOperator = (openParenthesis)? false : true;
+				precedingDecimal = false;
 			}
 			
 			if(c == '-' && precedingOperator) {
@@ -47,17 +51,39 @@ public class InputValidator {
 				return false;
 			}
 			else if(c == '-' && !precedingOperator) {
+				precedingAns = false;
 				precedingNumber = false;
 				precedingOperator = true;
+				precedingDecimal = false;
 			}
-			
+
+			if(c == 'A' && precedingDecimal) {
+				errorMessage = "Format error: Previous answers 'A' cannot be placed within decimal values";
+				return false;
+			}
 			if(c == 'A' && precedingNumber) {
 				errorMessage = "Format error: Previous answers 'A' must be preceded by an operator";
 				return false;
 			}
 			else if(c == 'A' && !precedingNumber) {
+				precedingAns = true;
 				precedingNumber = true;
 				precedingOperator = false;
+				precedingDecimal = false;
+				containsNumbers = true;
+			}
+
+			if(c == '.' && precedingDecimal) {
+				errorMessage = "Format error: Decimals must be followed up with numbers";
+				return false;
+			}
+			else if(c == '.' && !precedingDecimal) {
+				 precedingDecimal = true;
+				 precedingOperator = false;
+			}
+			if(c == '.' && precedingAns) {
+				errorMessage = "Format error: Previous answers 'A' must exist as a separate number";
+				return false;
 			}
 			
 			if(c == ')' && !openParenthesis) {
@@ -65,20 +91,25 @@ public class InputValidator {
 				return false;
 			}
 			else if(c == ')' && openParenthesis){
+				precedingAns = false;
 				precedingNumber = false;
 				openParenthesis = parenthesisCounter();
 			}
 			
 			if(c == '(') {
 				openParenthesis = true;
+				precedingAns = false;
 				precedingNumber = false;
 				precedingOperator = false;
+				precedingDecimal = false;
 				parenthesisCount++;
 			}
 			
 			if(Character.isDigit(c) || c == 'A') {
+				precedingAns = false;
 				precedingNumber = true;
 				precedingOperator = false;
+				precedingDecimal = false;
 				containsNumbers = true;
 			}
 		}

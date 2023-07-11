@@ -16,7 +16,7 @@ public class InputTerminal {
 		
 		System.out.println(
 		"=======================================================================================" +
-		"\nCalculator version 0.0.1 (wip)" +
+		"\n|The Expression Calculator|" +
 		"\n" +
 		"\nWelcome!" +
 		"\n" + 
